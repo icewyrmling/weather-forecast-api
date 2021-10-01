@@ -1,8 +1,8 @@
 @extends('layouts.app')
-<?php
+<!-- <?php
 $filename = 'gradovi.txt';
 $eachlines = file($filename, FILE_IGNORE_NEW_LINES);
-?>
+?> -->
 <!-- <script>
     var count;
     var cities;
@@ -37,7 +37,12 @@ $eachlines = file($filename, FILE_IGNORE_NEW_LINES);
         }
     }
 </script> -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<head>
+    <meta name="user-id" content="{{ Auth::user()->id }}">
+
+</head>
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -45,9 +50,6 @@ $eachlines = file($filename, FILE_IGNORE_NEW_LINES);
             <div class="card">
                <div class="card-header">{{ __('Dashboard') }}</div>
 
-
-                
-                
                 <!-- 
                 <div class="container">
                     <div class="row gx-lg-4">
@@ -56,8 +58,13 @@ $eachlines = file($filename, FILE_IGNORE_NEW_LINES);
                                 <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                                     <h2 class="fs-4 fw-bold">City picker:</h2> -->
                                         <div>
-                                            <example-component></example-component>
+                                            <city_selector></city_selector>
                                         </div>
+
+
+                                        <!-- <div>
+                                            <hello_world></hello_world>
+                                        </div> -->
                                     <!-- <div class="select">
                                     <select class="form-select" id="select1" aria-label="city_picker">
                                         <?php foreach($eachlines as $lines){echo "<option value='".$lines."'>$lines</option>";}?>
@@ -93,8 +100,7 @@ $eachlines = file($filename, FILE_IGNORE_NEW_LINES);
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
-                </div> -->
+                    {{ __('You are logged in!') }} -->
             </div>
         </div>
     </div>
