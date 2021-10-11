@@ -28,10 +28,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('daily:send')
-                 ->dailyAt('05:00');
+                 ->dailyAt('06:00')->timezone('Europe/Belgrade');
 
         $schedule->command('info:weather')
-                 ->dailyAt('04:00');
+                 ->dailyAt('04:00')->timezone('Europe/Belgrade');
     }
 
     /**

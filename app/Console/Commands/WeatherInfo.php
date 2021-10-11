@@ -19,7 +19,7 @@ class WeatherInfo extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Retrieve forecast to the database';
 
     /**
      * Create a new command instance.
