@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\SendDaily::class,
+        Commands\WeatherInfo::class
     ];
 
     /**
@@ -27,7 +28,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('daily:send')
-                ->cron('30 5 * * *');
+                 ->dailyAt('05:00');
+
+        $schedule->command('info:weather')
+                 ->dailyAt('04:00');
     }
 
     /**

@@ -1,20 +1,19 @@
 <template>
     <div id="app">
-        <div class="container bg-light">
+        <div class="container">
             <div class="row gx-lg-4">
-                
+
                 <div class="col-lg-10 col-xxl-6 mb">
                     <div class="card border-0 h-100">
                         <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                             <h1 class="fs-4 fw-bold">City picker:</h1>
-                            
-                            <select class="select" v-model="selected" >
-                                <option :key='city' v-for="city in options" > {{ city }} </option>
+
+                            <select multiple="true" class="select" v-model="selected_insert">
+                                <option :key="city.city_id" v-for="city in options" v-bind:value="city.city_id"> {{ city.city_name }} </option>
                             </select>
-                            
-                            <!-- <div>Selected: {{ selected }}</div> -->
+
                             <div>
-                                <button class="btn-primary" v-on:click="add_to_list" :disabled="isDisabled" >
+                                <button class="btn-primary" v-on:click="submit_data" :disabled="isDisabled" >
                                     Add to list
                                 </button>
                                 <button class="btn-warning" v-on:click="show_info">Show weather info</button>
@@ -28,12 +27,13 @@
                         <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                             <h1 class="fs-4 fw-bold">Chosen cities:</h1>
                             <div class="form-group">
-                                <!-- <div>{{ message }} </div> -->
-                                <textarea  class="textarea" v-model="message" rows="10" readonly style="resize: none;"></textarea>
+                                <select multiple="true" class="select" v-model="selected_delete" :key="this.render">
+                                    <option :key='city.city_id' v-for="city in selected_array" > {{ city.city_name }} </option>
+                                </select>
                             </div>
                             <br>
-                            <button class="btn-primary" v-on:click="submit_data" :disabled="isDisabledSubmit">
-                                Submit
+                            <button class="btn-primary" v-on:click="delete_selected" >
+                                Delete
                             </button>
                         </div>
                     </div>
@@ -42,85 +42,93 @@
             </div>
         </div>
         <div>
-            <h1 class="fs-4 fw-bold" v-if="info.data">{{ info.data.name + ": " + info.data.main.temp }}</h1>
-            <p v-else> loading.....</p>
+            <h1 class="fs-4 fw-bold" v-if="info.data">{{ info.data.location.name + ": " + info.data.forecast.forecastday[0].day.maxtemp_c }}</h1>
+            <p v-else> </p>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-       
+
         mounted() {
-            console.log('Component mounted.');
-            if(this.$userId){
-                console.log(this.$userId);
-                this.user = this.$userId
-            }
-        },
-        methods: {
-            add_to_list: function(){
-                var value = this.selected;
-                if(this.selected_array.length < 10 && this.selected != null && !this.selected_array.includes(this.selected)){
-                    if(this.selected_array.length == 0)
-                        this.message = value;
-                    else
-                        this.message += " \n " + value;
-                    this.selected_array.push(value);
-                    console.log(value);
-                }
-                if(this.selected_array.length == 10){
-                    this.isDisabled = true;
-                    this.isDisabledSubmit = false
-                };
-                
-            },
-            show_info: function(){
-                var url_b = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=";
-                var url_e = "&units=metric&appid=283ffcd4756f546f71f2e37f52c59bd9";
-                axios
-                    .get(url_b + this.selected + url_e)
-                    .then(response => (this.info = response));
-                console.log(this.info)
-            },
-
-
-            submit_data: function(){
-                /* axios.get('api/user').then(response => {
-                    this.user_id = response;
-                    console.log(response.body);
-                }) */
-                if(this.$userId){
-                    axios.post('write_to_db.php', {
-                        id: this.user,
-                        cities: this.selected_array
-                    }).then(function(response){
-                        //alert(response.data);
-                    }).catch(function(error){
+            this.forceRerender(),
+            axios.get('/getCities', {})
+                    .then(response => (
+                        this.options = response.data.cities
+                        ))
+                    .catch(function(error){
                         console.log(error);
                     });
-                    isDisabledSubmit = true;
+        },
+        props: ["appkey"],
+        methods: {
+            forceRerender() {
+                this.render += 1;
+                axios.get('/testGet', {})
+                    .then(response => (
+                        this.selected_array = response.data.cities,
+                        console.log(this.selected_array)
+                        ))
+                    .catch(function(error){
+                        console.log(error);
+                    });
+            },
+
+            show_info: function(){
+                var url_b = "https://cors-anywhere.herokuapp.com/http://api.weatherapi.com/v1/forecast.json?key=" + this.api_key +"&q=";
+                var url_e = "&days=1&aqi=no&alerts=no";
+                axios
+                    .get(url_b + this.options[this.selected_insert[0] - 1].city_name + url_e)
+                    //.get('https://cors-anywhere.herokuapp.com/http://api.weatherapi.com/v1/forecast.json?key=db4c37ba00f646eea71110349210610&q=Belgrade&days=1&aqi=no&alerts=no')
+                    .then(response => (this.info = response));
+                this.forceRerender()
+            },
+
+            delete_selected: function(){
+                axios.post('/testDelete', {
+                        cities: this.selected_delete
+                    })
+                    .then(response => (console.log(response.data)))
+                    .catch(error => (console.log(error))),
+                this.forceRerender()
+            },
+
+            submit_data: function(){
+                var value = this.selected_insert;
+                if(this.selected_insert.length > 10 || this.selected_insert.length + this.selected_array.length > 10){
+                    alert("You selected more than 10 cities. Please deselect some and try again. :D");
+                }
+                else{
+                    if(this.$userId){
+
+                        axios.post('/testInsert', {
+                            cities: this.selected_insert
+                        }).then(function(response){
+                            console.log(response.data);
+                        }).catch(function(error){
+                            console.log(error);
+                        });
+                    }
+                    this.forceRerender();
                     }
                 }
             },
 
         data() {
             return{
-                info: {},
-                selected: null,
-                options: ['Tirana', 'Andorra la Vella', "Vienna", "Minsk", "Brussels", "Sarajevo", "Sofia", "Zagreb", "Prague", "Copenhagen", "Tallinn",
-                "Helsinki", "Paris", "Berlin", "Athens", "Budapest", "Reykjavik", "Dublin", "Rome", "Riga", "Vaduz", "Vilnius", "Luxembourg", "Valletta",
-                "Chisinau", "Monaco", "Podgorica", "Amsterdam Haag", "Skopje", "Oslo", "Warsaw", "Lisbon", "Bucharest", "Moscow", "San Marino", "Belgrade",
-                "Bratislava", "Ljubljana", "Madrid", "Stockholm", "Bern", "Kiev", "London"] ,
-                message: '',
                 selected_array: [],
+                info: [],
+                selected_insert: [],
+                selected_delete: [],
+                options: [],
                 isDisabled: false,
-                isDisabledSubmit: true,
-                user: null
+                render: 0,
+                api_key: this.appkey,
             }
         },
 
-        
+
     }
 </script>
 
@@ -130,10 +138,27 @@ button,
 select
 {
     margin: 10px;
+    text-align-last: center;
+}
+
+select{
+    border-radius: 10px 5px;
+    height: 260px;
+    width: 210px;
+    scrollbar-width: none;
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 button{
     border-radius: 7.5px;
     padding: 10px;
+}
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
 }
 textarea{
     border-radius: 7.5px;

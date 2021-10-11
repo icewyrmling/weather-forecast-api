@@ -20,3 +20,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post("/testInsert", [App\Http\Controllers\WeatherController::class, 'store']);
+Route::get("/testGet", [App\Http\Controllers\WeatherController::class, 'index']);
+Route::post("/testDelete", [App\Http\Controllers\WeatherController::class, 'delete']);
+
+
+Route::get("/getCities", [App\Http\Controllers\CityController::class, 'index']);

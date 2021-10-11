@@ -17,9 +17,13 @@ class CreateCitiesByUserTable extends Migration
             $table->id();
             $table->index('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('city_name');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
+            $table->unsignedBigInteger('city_id');
+            $table->unique(['user_id', 'city_id']);
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
+
         });
     }
 

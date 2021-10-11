@@ -10,8 +10,18 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+ const Dotenv = require('dotenv-webpack');
+
+
+ module.exports = {
+   configureWebpack: {
+     plugins: [
+       new Dotenv()
+     ]
+   }
+ }
 
 mix.js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps();   
+    .sourceMaps();

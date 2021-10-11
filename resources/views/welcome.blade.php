@@ -23,8 +23,8 @@
     @section('content')
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            
-            
+
+
 
             <header class="py-5">
             <div class="container px-lg-5">
@@ -46,7 +46,7 @@
                             <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                                 <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-collection"></i></div>
                                 <h2 class="fs-4 fw-bold">Daily</h2>
-                                <p class="mb-0">With Bootstrap 5, we've created a fresh new layout for this template!</p>
+                                {{-- <p class="mb-0">With Bootstrap 5, we've created a fresh new layout for this template!</p> --}}
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                                 <div class="feature bg-success bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-cloud-download"></i></div>
                                 <h2 class="fs-4 fw-bold">Free</h2>
-                                <p class="mb-0">As always, Start Bootstrap has a powerful collectin of free templates.</p>
+                                {{-- <p class="mb-0">As always, Start Bootstrap has a powerful collectin of free templates.</p> --}}
                             </div>
                         </div>
                     </div>
@@ -64,11 +64,11 @@
                             <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                                 <div class="feature bg-warning bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-card-heading"></i></div>
                                 <h2 class="fs-4 fw-bold">Sunrise</h2>
-                                <p class="mb-0">The heroic part of this template is the jumbotron hero header!</p>
+                                {{-- <p class="mb-0">The heroic part of this template is the jumbotron hero header!</p> --}}
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </section>
@@ -76,7 +76,7 @@
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy;icewyrmling 2021</p></div>
         </footer>
-        
+
         </div>
     </body>
     @endsection

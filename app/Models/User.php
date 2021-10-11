@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function cities_by_user(){
+        return $this->hasMany('App\Models\CitiesByUser');
+    }
+
 }
