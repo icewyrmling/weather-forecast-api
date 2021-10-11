@@ -7,16 +7,17 @@
                     <div class="card border-0 h-100">
                         <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                             <h1 class="fs-4 fw-bold">City picker:</h1>
-                                <div class="form-group">
+                            <div class="form-group">
                                 <select multiple="true" class="select" v-model="selected_insert">
                                     <option :key="city.city_id" v-for="city in options" v-bind:value="city.city_id"> {{ city.city_name }} </option>
                                 </select>
-                                </div>
-                            <br>
-                            <div>
-                                <button class="btn-primary" v-on:click="submit_data" :disabled="isDisabled" >
+                                <br><br>
+                                <button class="btn btn-primary" v-on:click="submit_data" :disabled="isDisabled" >
                                     Add to list
                                 </button>
+                            </div>
+                            <div>
+                                
                                 <!-- <button class="btn-warning" v-on:click="show_info">Show weather info</button> -->
                             </div>
                         </div>
@@ -31,11 +32,12 @@
                                 <select multiple='true' class='select-noscroll' v-model='selected_delete' @focus='forceRerender()' @blur='forceRerender()'>
                                     <option :key='city.city_id' v-for="city in selected_array" > {{ city.city_name }} </option>
                                 </select>
+                                <br><br>
+                                <button class="btn btn-danger" v-on:click="delete_selected" >
+                                    Delete
+                                </button>
                             </div>
-                            <br>
-                            <button class="btn-danger" v-on:click="delete_selected" >
-                                Delete
-                            </button>
+                            
                         </div>
                     </div>
                 </div>
@@ -68,13 +70,16 @@
         methods: {
             forceRerender() {
                 axios.get('/testGet', {})
-                    .then(response => (
-                        this.selected_array = response.data.cities
-                        //console.log(this.selected_array)
-                        ))
+                    .then(response => ( this.selected_array = response.data.cities ))
                     .catch(function(error){
                         console.log(error);
                     });
+                if(this.selected_array.length == 10){
+                    this.isDisabled = true;
+                }
+                else{
+                    this.isDisabled = false;
+                }
             },
 
             /* show_info: function(){
@@ -147,10 +152,11 @@ h1
 }
 
 select{
-    border-radius: 10px 5px;
+    border-radius: 10px 10px;
     height: 300px;
     width: 300px;
-    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font: 18px;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -165,7 +171,7 @@ button{
     border-radius: 7.5px;
     padding: 10px;
 }
-button:disabled,
+btn-primary:disabled,
 button[disabled]{
   border: 1px solid #999999;
   background-color: #cccccc;
