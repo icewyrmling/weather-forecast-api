@@ -43,8 +43,8 @@ class SendDaily extends Command
         $users = User::all();
 
         foreach ($users as $user) {
-            $cities = DB::table('cities_by_user')->where('user_id', $user->id)->join('city', 'cities_by_user.city_id','=','city.city_id')->get();
-            $message = "<h1 style='color:#125B36;'>Forecast for the cities selected by " . $user->name . ":</h1> <hr>";
+            $cities = DB::table('cities_by_user')->where('user_id', $user->id)->join('city', 'cities_by_user.city_id','=','city.city_id')->orderBy('city.city_name', 'asc')->get();
+            $message = "<h1 style='color:#125B36;'>Good morning, " . $user->name . ". Here is the forecast for your selected cities:</h1> <hr>";
             foreach ($cities as $city) {
                 $message .= "<h3 style='color:#732626';>" . strtoupper($city->city_name) . "</h3>"
                 . "&ensp; Min temperature for today: <b>"
@@ -52,7 +52,7 @@ class SendDaily extends Command
                 . "<br>&ensp; Max temperature for today: <b>"
                 . $city->max_temp . "</b>"
                 . ($city->max_temp < 15 ? "<br> <p style='color: #802010;'>&ensp; It's gonna be a cold day. Dress accordingly. </p>" : "<br><p style='color:#802010;'>&ensp; You could get away with lighter clothing, it won't be cold today. </p>")
-                . ($city->precipitation > 0.1 ? "<p style='color:lightblue'>&ensp; <b>Bring an umbrella</b>, it is likely to rain! </p><br>" : "<br>");
+                . ($city->precipitation > 0.1 ? "<p style='color:blue'>&ensp; <b>Bring an umbrella</b>, it is likely to rain! </p><br>" : "<br>");
             }
 
             Mail::send([], [], function ($mail) use ($user, $message) {

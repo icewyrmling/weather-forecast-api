@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        
         // $schedule->command('inspire')->hourly();
         $schedule->command('daily:send')
                  ->dailyAt('06:00')->timezone('Europe/Belgrade');

@@ -16,7 +16,7 @@ class WeatherController extends Controller
     public function index()
     {
         $userID = auth()->user()->id;
-        $data = DB::table('cities_by_user')->where('user_id', $userID)->join('city', 'cities_by_user.city_id','=','city.city_id')->get('city_name');
+        $data = DB::table('cities_by_user')->where('user_id', $userID)->join('city', 'cities_by_user.city_id','=','city.city_id')->orderBy('city_name', 'asc')->get('city_name');
         return response()->json([
             "cities" => $data,
         ]);
@@ -75,6 +75,13 @@ class WeatherController extends Controller
         ]);
     }
 
+    public function setTime(Request $request)
+    {
+        $userID = auth()->user()->id;
+        DB::table("users")->where('id', $userID)->update([
+            "mail_time" => $request->time,
+        ]);
+    }
     /**
      * Show the form for editing the specified resource.
      *

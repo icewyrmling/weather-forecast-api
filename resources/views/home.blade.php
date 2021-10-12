@@ -7,22 +7,21 @@
 </head>
 
 @section('content')
-<div class="container">
+<div class="container" style="position: relative; top: 50%;">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                    <?php
-                    /*
-                    * * @todo prebaci u kontroler
-                    */
-                        $key = env("VUE_APP_WEATHER_API_KEY");
-                    ?>
-
-                    <div>
-                        <city_selector appkey="{{ $key }}"></city_selector>
+            <div>
+                <div class="row gx-lg-4">
+                    <div class="text-center col-lg-10 col-xxl-6 mb">
+                        <city_selector></city_selector>
                     </div>
 
+                    <div class="text-center col-lg-10 col-xxl-6 mb">
+                        <city_deleter></city_deleter>
+                    </div>
+                </div>
 
+                <time_selector></time_selector>
                <!--  <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -35,4 +34,7 @@
         </div>
     </div>
 </div>
+<footer class="py-5 bg-dark" style="position:absolute; bottom: 0; height:10%; width: 100%">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; icewyrmling 2021</p></div>
+</footer>
 @endsection

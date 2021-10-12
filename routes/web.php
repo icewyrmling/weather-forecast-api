@@ -27,3 +27,4 @@ Route::post("/testDelete", [App\Http\Controllers\WeatherController::class, 'dele
 
 
 Route::get("/getCities", [App\Http\Controllers\CityController::class, 'index']);
+Route::post("/setTime", [App\Http\Controllers\WeatherController::class, 'setTime']);

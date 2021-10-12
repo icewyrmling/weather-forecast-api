@@ -18,7 +18,9 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('city_selector', require('./components/city_selector.vue').default);
-Vue.component('hello_world', require('./components/hello_world.vue').default);
+Vue.component('city_deleter', require('./components/city_deleter.vue').default);
+Vue.component('time_selector', require('./components/time_selector.vue').default);
+
 Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
 /**
  * Next, we will create a fresh Vue application instance and attach it to

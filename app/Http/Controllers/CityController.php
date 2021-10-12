@@ -12,7 +12,7 @@ class CityController extends Controller
 
     public function index()
     {
-        $data = DB::table('city')->get();
+        $data = DB::table('city')->orderBy('city_name', 'asc')->get();
         return response()->json([
             "cities" => $data
         ]);
