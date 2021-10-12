@@ -6,4 +6,4 @@
 - Database is MySql
 - Homestead used as mock server
 
-![preview](public\Screenshot_1.png)
+![preview](public/Screenshot_1.png)
