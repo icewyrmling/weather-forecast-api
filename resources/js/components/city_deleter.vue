@@ -59,13 +59,14 @@ h1
 }
 h1.comp{
     font-family: 'Quicksand', sans-serif;
-    background: rgba(230, 203, 203, 0.7);
+    background: rgba(230, 203, 203, 0.5);
     border-radius: 7.5px;
     display: inline-block;
     padding: 2%;
+    box-shadow: 8px 8px 10px rgba(53, 126, 71, 0.4);
 }
 .comp-select{
-    background: rgba(240, 248, 255, 0.6);
+    background: rgba(240, 248, 255, 0.4);
     border-radius: 10px 10px;
     border-width: 1px;
     border-style: solid;
@@ -73,6 +74,7 @@ h1.comp{
     width: 300px;
     scrollbar-width: none;
     text-align-last: center;
+    box-shadow: 8px 8px 10px rgba(53, 126, 71, 0.4);
 }
 button{
     border-radius: 7.5px;
