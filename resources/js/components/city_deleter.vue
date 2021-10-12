@@ -6,7 +6,7 @@
                 <option :key='city.city_id' v-for="city in selected_array" > {{ city.city_name }} </option>
             </select>
             <br><br>
-            <button class="btn btn-danger" v-on:click="delete_selected" >
+            <button class="btn btn-danger" v-on:click="delete_selected" style="display: inline-block; padding: 2%;">
                 Delete
             </button>
         </div>
@@ -59,19 +59,20 @@ h1
 }
 h1.comp{
     font-family: 'Quicksand', sans-serif;
-    background: rgba(230, 203, 203, 0.8);
+    background: rgba(230, 203, 203, 0.7);
     border-radius: 7.5px;
     display: inline-block;
     padding: 2%;
 }
 .comp-select{
-    background: rgba(240, 248, 255, 0.7);
+    background: rgba(240, 248, 255, 0.6);
     border-radius: 10px 10px;
     border-width: 1px;
     border-style: solid;
     height: 300px;
     width: 300px;
     scrollbar-width: none;
+    text-align-last: center;
 }
 button{
     border-radius: 7.5px;

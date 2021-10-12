@@ -42,8 +42,8 @@ class WeatherController extends Controller
     {
         $userID = auth()->user()->id;
         $cities = $request->cities;
-        $count_cities = DB::table('cities_by_user')->where('user_id', $userID)->count();
         foreach ($cities as $city_id) {
+            $count_cities = DB::table('cities_by_user')->where('user_id', $userID)->count();
             if($count_cities < 10){
                 DB::table("cities_by_user")->insertOrIgnore([
                     "user_id" => $userID,

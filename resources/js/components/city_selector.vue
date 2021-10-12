@@ -6,7 +6,7 @@
                 <option :key="city.city_id" v-for="city in options" v-bind:value="city.city_id"> {{ city.city_name }} </option>
             </select>
             <br><br>
-            <button class="btn btn-success" v-on:click="submit_data">
+            <button class="btn btn-success" v-on:click="submit_data" style="display: inline-block; padding: 2%;">
                 Add to list
             </button>
         </div>
@@ -28,11 +28,11 @@
 
         methods: {
             forceRerender() {
-                axios.get('/testGet', {})
+                /* axios.get('/testGet', {})
                     .then(response => ( this.selected_array = response.data.cities ))
                     .catch(function(error){
                         console.log(error);
-                    });
+                    }); */
             },
 
             submit_data: function(){

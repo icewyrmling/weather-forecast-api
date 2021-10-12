@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-       <select name="timeSelect" v-model="selected">
+    <div id="app" style="text-align:center; vertical-align: middle;">
+       <select name="timeSelect" v-model="selected" style="background: rgba(230, 235, 250, 0.7); border-radius:5px; border-width:0.5px;">
            <option :key='n' v-for="n in 24" > {{ n - 1 + ":00" }}</option>
        </select>
        <button class="btn btn-primary" @click="selectTime">Select time</button> 
