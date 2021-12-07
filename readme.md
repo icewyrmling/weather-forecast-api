@@ -1,4 +1,4 @@
- # Project for paragraf lex internship
+ # Project for an internship
 
  > web application for weather forecast with a daily email
 
